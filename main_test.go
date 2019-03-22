@@ -71,7 +71,6 @@ func TestLatestVersions(t *testing.T) {
 	test := func(versionData []string, expectedResult []string, minVersion *semver.Version) {
 		stringSlice := versionToStringSlice(LatestVersions(stringToVersionSlice(versionData), minVersion))
 		for i, versionString := range stringSlice {
-			fmt.Println(expectedResult[i])
 			if versionString != expectedResult[i] {
 				t.Errorf("Received %s, expected %s", stringSlice, expectedResult)
 				return

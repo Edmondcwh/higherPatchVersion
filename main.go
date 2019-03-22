@@ -37,9 +37,9 @@ func LatestVersions(releases []*semver.Version, minVersion *semver.Version) []*s
 		if (minVersion.Compare(*version) <= 0) { 
 			if (idx == 0) { // highest version as the versionSlice's first element
 				versionSlice = append(versionSlice, version) 
-			} else if (versionSlice[idx - 1].Minor != version.Minor) { 
+			} else if (versionSlice[idx - 1].Minor != version.Minor) {  // Given releases is sorted, when the minor is different, the highest version of a smaller minor version is found
 					versionSlice = append(versionSlice, version)
-				} else if(versionSlice[idx - 1].Major != version.Major) { // update the highest version of the minor version
+				} else if(versionSlice[idx - 1].Major != version.Major) { // handle speical case where same minor but lower major version is found
 					versionSlice = append(versionSlice, version)
 				} 
 			
