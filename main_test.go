@@ -2,7 +2,7 @@ package main
 
 import (
 	"testing"
-
+	"fmt"
 	"github.com/coreos/go-semver/semver"
 )
 
@@ -50,37 +50,28 @@ func TestLatestVersions(t *testing.T) {
 		},
 		// Implement more relevant test cases here, if you can think of any
 		{
-			versionSlice:   []string{"1.8.11", "1.9.6", "2.10.1", "1.9.5", "1.8.10", "1.10.0", "1.7.14", "1.8.9", "1.9.5"},
-			expectedResult: []string{"2.10.1"},
-			minVersion:     semver.New("1.8.0"),
+			versionSlice:	[]string{"2.5.5", "1.5.7"},
+			expectedResult:	[]string{"2.5.5", "1.5.7"},
+			minVersion:		semver.New("1.4.4"),
 		},
 		{
-			versionSlice:   []string{"1.8.11", "1.9.6", "1.9.5", "1.8.10", "1.10.0", "2.7.14", "1.8.9", "1.9.5"},
-			expectedResult: []string{"2.7.14"},
-			minVersion:     semver.New("1.8.0"),
+			versionSlice:	[]string{"2.5.5","2.4.7", "2.4.3", "1.4.7", "1.4.3"},
+			expectedResult:	[]string{"2.5.5", "2.4.7", "1.4.7"},
+			minVersion:		semver.New("1.4.4"),
 		},
 		{
-			versionSlice:   []string{"1.9.2-alpha", "1.9.2-beta" },
-			expectedResult: []string{"1.9.2-beta"},
-			minVersion:     semver.New("1.8.0"),
+			versionSlice:	[]string{"1.4.3", "2.4.3"},
+			expectedResult:	[]string{},
+			minVersion:		semver.New("2.4.4"),
 		},
-		{
-			versionSlice:   []string{"1.8.2", "1.8.2-alpha"},
-			expectedResult: []string{"1.8.2"},
-			minVersion:     semver.New("1.8.0"),
-		},
-		{
-			versionSlice:   []string{"1.8.2", "1.8.02"},
-			expectedResult: []string{"1.8.2"},
-			minVersion:     semver.New("1.8.0"),
-		},
-		
+
 
 	}
 
 	test := func(versionData []string, expectedResult []string, minVersion *semver.Version) {
 		stringSlice := versionToStringSlice(LatestVersions(stringToVersionSlice(versionData), minVersion))
 		for i, versionString := range stringSlice {
+			fmt.Println(expectedResult[i])
 			if versionString != expectedResult[i] {
 				t.Errorf("Received %s, expected %s", stringSlice, expectedResult)
 				return

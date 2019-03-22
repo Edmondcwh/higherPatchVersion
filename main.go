@@ -34,19 +34,16 @@ func LatestVersions(releases []*semver.Version, minVersion *semver.Version) []*s
 	sort.Sort(Descend(releases))
 	for _, version :=  range releases {
 		idx := len(versionSlice)
-		if (minVersion.LessThan(*version)) {
+		if (minVersion.Compare(*version) <= 0) { 
 			if (idx == 0) { // highest version as the versionSlice's first element
 				versionSlice = append(versionSlice, version) 
-			} else if (versionSlice[idx-1].Major == version.Major) { // make sure verison is the smaller minor versions of the highest version
-				if (versionSlice[idx - 1].Minor > version.Minor) { 
+			} else if (versionSlice[idx - 1].Minor != version.Minor) { 
 					versionSlice = append(versionSlice, version)
-				} else if(versionSlice[idx - 1].Minor == version.Minor && versionSlice[idx - 1].Patch < version.Patch) { // update the highest version of the minor version
-					versionSlice = versionSlice[:idx-1]
+				} else if(versionSlice[idx - 1].Major != version.Major) { // update the highest version of the minor version
 					versionSlice = append(versionSlice, version)
 				} 
-			} else {
-				break // end the loop when version is not the smaller minor versions of the highest version
-			}
+			
+			
 		} else {
 			break // end the loop when version is smaller than minVersion
 		}
@@ -114,7 +111,7 @@ func getRespositories(content []string) {
 // Please use the format defined by the fmt.Printf line at the bottom, as we will define a passing coding challenge as one that outputs
 // the correct information, including this line
 func main() {
-	// Github
+	
 	if len(os.Args) < 2 {
         fmt.Println("Missing parameter, provide file name!")
         return
