@@ -1,5 +1,5 @@
 # higherPatchVersion
-Lalamove tech internship challenge: track new versions of respository
+
 
 ## Getting started
 These instructions will get you the new versions of the respository
